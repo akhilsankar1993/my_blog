@@ -34,7 +34,7 @@ This is the circuit to set up the water pump. I forgot to update the resistor in
 
 This is the circuit to set up the soil moisture. Once again, I actually used a 10K ohm resistor here:
 
-![Soil Moisture Circuit](/images/setting_up_nodemcu.png)
+![Soil Moisture Circuit](/images/setting_up_nodemcu/moisture_circuit.png)
 
 You'll need to strip the insulation off the ends of the yellow wiring to get readings in the soil. I'd also recommending soldering galvanized nails to the ends of these wires if you have a soldering iron handy. That'll get you optimal readings.
 
@@ -42,7 +42,7 @@ You'll need to strip the insulation off the ends of the yellow wiring to get rea
 
 I was trying to setup the NodeMCU to work on OSX Sierra, which gave me a couple of issues. This is the process I had to run to get the Arduino environment correctly configured to flash to the dev board.
 
-On the Arduino environment (), you'll need to go to _Preferences -> Additional Boards Manager URLs -> and add_ `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
+On the Arduino environment, you'll need to go to _Preferences -> Additional Boards Manager URLs -> and add_ `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
 
 Then go to _Tools->Boards Manager->_, search for and install the `esp8266` package (I'm using 2.3.0).
 
