@@ -6,10 +6,19 @@
     <description>Recent content on Hugo Cactus Theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Oct 2017 13:24:07 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 01 Oct 2017 14:11:52 -0400</lastBuildDate>
     
 	<atom:link href="https://akhilsankar1993.github.io/my_blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Setting Up the NodeMCU</title>
+      <link>https://akhilsankar1993.github.io/my_blog/posts/setting_up_the_nodemcu/</link>
+      <pubDate>Sun, 01 Oct 2017 14:11:52 -0400</pubDate>
+      
+      <guid>https://akhilsankar1993.github.io/my_blog/posts/setting_up_the_nodemcu/</guid>
+      <description>The Project This is a robot that would allow me to track the moisture level of the soil in my baby tomato plant and pump water to it. I wanted the system to have a WiFi accessible API to be able to send data on the real time moisture level of the soil. I also wanted it to be able to accept JSON on the desired moisture level of the soil.</description>
+    </item>
     
     <item>
       <title>hello.</title>

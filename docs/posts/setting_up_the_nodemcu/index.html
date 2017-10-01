@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Akhil Sankar">
+<meta name="description" content="A place for me to document projects and other stuff.">
+<meta name="generator" content="Hugo 0.27" />
+<title>Setting Up the NodeMCU</title>
+<link rel="shortcut icon" href="https://akhilsankar1993.github.io/my_blog/images/favicon.ico">
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/style.css">
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/highlight.css">
+
+
+
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/monosocialiconsfont.css">
+
+
+
+
+<meta property="og:title" content="Setting Up the NodeMCU" />
+<meta property="og:description" content="The Project This is a robot that would allow me to track the moisture level of the soil in my baby tomato plant and pump water to it. I wanted the system to have a WiFi accessible API to be able to send data on the real time moisture level of the soil. I also wanted it to be able to accept JSON on the desired moisture level of the soil." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://akhilsankar1993.github.io/my_blog/posts/setting_up_the_nodemcu/" />
+
+
+
+<meta property="article:published_time" content="2017-10-01T14:11:52-04:00"/>
+<meta property="article:modified_time" content="2017-10-01T14:11:52-04:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Setting Up the NodeMCU">
+<meta itemprop="description" content="The Project This is a robot that would allow me to track the moisture level of the soil in my baby tomato plant and pump water to it. I wanted the system to have a WiFi accessible API to be able to send data on the real time moisture level of the soil. I also wanted it to be able to accept JSON on the desired moisture level of the soil.">
+
+
+<meta itemprop="dateModified" content="2017-10-01T14:11:52-04:00" />
+<meta itemprop="wordCount" content="920">
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Setting Up the NodeMCU"/>
+<meta name="twitter:description" content="The Project This is a robot that would allow me to track the moisture level of the soil in my baby tomato plant and pump water to it. I wanted the system to have a WiFi accessible API to be able to send data on the real time moisture level of the soil. I also wanted it to be able to accept JSON on the desired moisture level of the soil."/>
+
+
+    </head>
+<body>
+    <nav class="main-nav">
+	
+		<a href='https://akhilsankar1993.github.io/my_blog/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+
+	
+</nav>
+
+    <section id="wrapper">
+        
+        
+<article class="post">
+    <header>
+        <h1>Setting Up the NodeMCU</h1>
+        <h2 class="subtitle"></h2>
+        <h2 class="headline">
+        October 1, 2017
+        <br>
+        
+        </h2>
+    </header>
+    <section id="post-body">
+        
+
+<h4 id="the-project">The Project</h4>
+
+<p>This is a robot that would allow me to track the moisture level of the soil in my baby tomato plant and pump water to it. I wanted the system to have a WiFi accessible API to be able to send data on the real time moisture level of the soil. I also wanted it to be able to accept JSON on the desired moisture level of the soil.</p>
+
+<p>This is a pretty basic project for now, but I want to be able to connect it to other projects soon.</p>
+
+<p>Alright, enough talk! Lets build!</p>
+
+<p><em>Quick disclaimer: This is a writeup just to document the project as it worked for me. If you question the validity/safety of these steps, I encourage you to research them on your own before moving forward. Please use this resource at your own risk.</em></p>
+
+<h4 id="what-you-need">What You need</h4>
+
+<ul>
+<li><a href="https://www.amazon.com/gp/product/B010O1G1ES/ref=oh_aui_detailpage_o07_s00?ie=UTF8&amp;psc=1">NodeMCU dev board (you&rsquo;ll need a microUSB wire too)</a></li>
+<li><a href="https://www.amazon.com/gp/product/B00JWJIC0K/ref=oh_aui_detailpage_o00_s00?ie=UTF8&amp;psc=1">5V water pump</a></li>
+<li><a href="https://www.amazon.com/gp/product/B071D98X7K/ref=oh_aui_detailpage_o00_s00?ie=UTF8&amp;psc=1">9V battery clips</a></li>
+<li><a href="https://www.amazon.com/Gikfun-Transistor-2N2222A-2N2222-Arduino/dp/B01J7P2XM6/ref=sr_1_1?s=electronics&amp;ie=UTF8&amp;qid=1506886819&amp;sr=1-1&amp;keywords=2n2222+transistor">2N2222 NPN transistor</a></li>
+<li><a href="https://www.amazon.com/GenBasic-Solderless-Ribbon-Breadboard-Prototyping/dp/B01L5UJ36U/ref=sr_1_1?s=electronics&amp;ie=UTF8&amp;qid=1506886901&amp;sr=1-1&amp;keywords=jumper+wire+male+to+male">Jumper wire</a></li>
+<li><a href="https://www.amazon.com/Qunqi-point-Experiment-Breadboard-5-5%C3%978-2%C3%970-85cm/dp/B0135IQ0ZC/ref=sr_1_2_sspa?s=electronics&amp;ie=UTF8&amp;qid=1506887010&amp;sr=1-2-spons&amp;keywords=breadboard&amp;psc=1">Breadboard</a></li>
+<li>150 and 10K ohm resistors</li>
+</ul>
+
+<h4 id="setting-up-the-hardware">Setting Up the Hardware</h4>
+
+<p>To make it a little easier to follow, I&rsquo;ll split the hardware into two diagrams, one to power the water pump and one to set up the soil moisture sensor.</p>
+
+<p>This is the circuit to set up the water pump. I forgot to update the resistor in this schematic but I actually used a 150 ohm resistor between the dev board and the base of the transistor:</p>
+
+<p><img src="../../images/power_circuit.png" alt="Water Pump Circuit" /></p>
+
+<p>This is the circuit to set up the soil moisture. Once again, I actually used a 10K ohm resistor here:</p>
+
+<p><img src="../../images/moisture_circuit.png" alt="Soil Moisture Circuit" /></p>
+
+<p>You&rsquo;ll need to strip the insulation off the ends of the yellow wiring to get readings in the soil. I&rsquo;d also recommending soldering galvanized nails to the ends of these wires if you have a soldering iron handy. That&rsquo;ll get you optimal readings.</p>
+
+<h4 id="setting-up-the-nodemcu">Setting Up the NodeMCU</h4>
+
+<p>I was trying to setup the NodeMCU to work on OSX Sierra, which gave me a couple of issues. This is the process I had to run to get the Arduino environment correctly configured to flash to the dev board.</p>
+
+<p>On the Arduino environment (), you&rsquo;ll need to go to <em>Preferences -&gt; Additional Boards Manager URLs -&gt; and add</em> <code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code></p>
+
+<p>Then go to <em>Tools-&gt;Boards Manager-&gt;</em>, search for and install the <code>esp8266</code> package (I&rsquo;m using 2.3.0).</p>
+
+<p>Now you should be able to go to <em>Tools-&gt;Board</em> and add <code>NodeMCU 1.0(ESP-12E Module)</code></p>
+
+<p>If you now plug in your dev board, you might notice that the <em>Tools-&gt;Ports</em> options are something like:</p>
+
+<pre><code>/dev/cu.lpss-serial1
+/dev/cu.lpss-serial2
+/dev/cu.Bluetooth-Incoming-Port
+etc.
+</code></pre>
+
+<p>Apparently, the NodeMCU ships with CH340G USB/Serial ports, which aren&rsquo;t supported by most operating systems. <a href="http://justjibba.net/getting-the-nodemcu-board-to-work-on-mac-os-10-12/">James Best has a good blog post on this</a>.</p>
+
+<p>That solution didn&rsquo;t exactly work for me but it might work for you. For me, I wasn&rsquo;t seeing the port that I actually I needed, and I had install the <a href="https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers">CP210X USB to UART Bridge</a> to get the correct port.</p>
+
+<p>Finally, my selected port turned out to be <code>/dev/cu.SLAB_USBtoUART</code> but yours might look a bit different.</p>
+
+<h4 id="the-software">The Software</h4>
+
+<p>For now, I&rsquo;ll just post the software that I used. This is more like boilerplate code just to get the basic endpoints working. I definitely need to refactor a lot of it, but I&rsquo;m feeling lazy right now. I&rsquo;ll refactor this and walk through it line by line in another post.</p>
+
+<pre><code class="language-c">
+#include &lt;ESP8266WiFi.h&gt;
+#include &lt;ESP8266WebServer.h&gt;
+#include &lt;ESP8266mDNS.h&gt;
+#include &lt;WiFiClient.h&gt;
+#include &lt;ArduinoJson.h&gt;
+
+const char* ssid = &quot;{{wifi_network_name}}&quot;;
+const char* password = &quot;{{wifi_password}}&quot;;
+ESP8266WebServer server ( 80 );
+
+const int pumpPin = D7;
+const int moistureSensorPin = A0;
+
+void setup( void ) {
+  pinMode(pumpPin, OUTPUT);
+
+  Serial.begin ( 9600 );
+  WiFi.begin ( ssid, password );
+  Serial.println ( &quot;&quot; );
+
+  while ( WiFi.status() != WL_CONNECTED ) {
+    delay ( 500 );
+    Serial.print ( &quot;.&quot; );
+  }
+
+  Serial.println ( &quot;&quot; );
+  Serial.print ( &quot;Connected to &quot; );
+  Serial.println ( ssid );
+  Serial.print ( &quot;IP address: &quot; );
+  Serial.println ( WiFi.localIP() );
+
+  if ( MDNS.begin ( &quot;esp8266&quot; ) ) {
+    Serial.println ( &quot;MDNS responder started&quot; );
+  }
+
+  server.on( &quot;/test&quot;, testPump);
+  server.on( &quot;/pump_water&quot;, pumpWater);
+  server.on( &quot;/moisture_level&quot;, getMoistureLevel);
+
+  server.begin();
+}
+
+void loop(void) {
+  server.handleClient();
+}
+
+void testPump() {
+  Serial.println(&quot;gets to function&quot;);
+  digitalWrite(pumpPin, HIGH);
+  delay(2000);
+  digitalWrite(pumpPin, LOW);
+  server.send (200, &quot;text/html&quot;, &quot;Pump test successful.&quot;);
+}
+
+void getMoistureLevel() {
+  Serial.println(&quot;measuring moisture level:&quot;);
+  int moistureVoltage = analogRead(moistureSensorPin);
+  Serial.println(moistureVoltage);
+}
+
+void pumpWater() {
+  StaticJsonBuffer&lt;200&gt; jsonBuffer;
+  JsonObject&amp; root = jsonBuffer.parseObject(server.arg(&quot;plain&quot;));
+  int desiredMoistureLevel = root[&quot;desiredMoistureLevel&quot;];
+
+  int currentMoistureLevel = 1;
+  while (currentMoistureLevel &lt; desiredMoistureLevel) {
+    digitalWrite(pumpPin, HIGH);
+    // currentMoistureLevel = digitalRead(D7);
+    Serial.println(&quot;Current moisture Level: &quot;);
+    Serial.println(currentMoistureLevel);
+    currentMoistureLevel++;
+    delay(1000);
+  }
+  digitalWrite(pumpPin, LOW);
+  server.send(200, &quot;text/plain&quot;, &quot;Pump complete&quot;);
+}
+
+void postFunction() {
+  StaticJsonBuffer&lt;200&gt; jsonBuffer;
+  JsonObject&amp; root = jsonBuffer.parseObject(server.arg(&quot;plain&quot;));
+  int desiredMoistureLevel = root[&quot;desiredMoistureLevel&quot;];
+  int pumpStatus = root[&quot;pumpStatus&quot;];
+  Serial.print(&quot;Desired Moisture Level: &quot;);
+  Serial.println(desiredMoistureLevel);
+  Serial.print(&quot;Pump Status: &quot;);
+  Serial.println(pumpStatus);
+}
+</code></pre>
+
+<p>You can <em>Upload</em> this code into your dev board and immediately see the connection to the wifi network made on the Serial Monitor (the magnifying glass icon on the top right of the Arduino IDE).</p>
+
+<h4 id="hitting-the-endpoints">Hitting the Endpoints</h4>
+
+<p>You can then use the Serial Monitor to view the data transmitted to and from the Dev Board and your client (Postman, cURL, etc).</p>
+
+<p>I used Postman to make API calls to the dev board server by its IP.</p>
+
+<p>These were my API calls:</p>
+
+<pre><code>GET `:dev_board_ip_address/moisture_level`
+
+Headers:
+
+Content-Type: application/json
+Content-Length: 20
+</code></pre>
+
+<pre><code>POST `:dev_board_ip_address/pump_water`
+
+Headers:
+
+Content-Type: application/json
+Content-Length: 20
+
+Body (raw JSON):
+
+{
+  &quot;desiredMoistureLevel&quot;: &quot;5&quot;
+}
+</code></pre>
+
+<h4 id="you-re-done">You&rsquo;re Done!</h4>
+
+<p>Hopefully, this helped shed some light on how to setup the NodeMCU and make calls to it. In my next post I&rsquo;ll need to document how to expose this API outside the local network.</p>
+
+<p>Thanks for reading!</p>
+
+    </section>
+</article>
+
+
+
+<ul id="post-list" class="archive readmore">
+    
+
+    
+    
+    
+        <li>
+            <a href="/my_blog/posts/first_post/">hello.<aside class="dates">Oct 1 2017</aside></a>
+        </li>
+    
+</ul>
+
+
+
+        <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    
+    <a class="symbol" href="https://www.github.com/akhilsankar1993">
+        circlegithub
+    </a>
+    
+    <a class="symbol" href="https://www.linkedin.com/in/akhilsankar">
+        circlelinkedin
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+        © Copyright 2017 Akhil Sankar
+    
+    </p>
+</footer>
+
+    </section>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://akhilsankar1993.github.io/my_blog/js/main.js"></script>
+<script src="https://akhilsankar1993.github.io/my_blog/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>

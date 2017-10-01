@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://akhilsankar1993.github.io/my_blog/posts/setting_up_the_nodemcu/</loc>
+    <lastmod>2017-10-01T14:11:52-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://akhilsankar1993.github.io/my_blog/posts/first_post/</loc>
     <lastmod>2017-10-01T13:24:07-04:00</lastmod>
   </url>
@@ -14,13 +19,13 @@
   
   <url>
     <loc>https://akhilsankar1993.github.io/my_blog/</loc>
-    <lastmod>2017-10-01T13:24:07-04:00</lastmod>
+    <lastmod>2017-10-01T14:11:52-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://akhilsankar1993.github.io/my_blog/posts/</loc>
-    <lastmod>2017-10-01T13:24:07-04:00</lastmod>
+    <lastmod>2017-10-01T14:11:52-04:00</lastmod>
     <priority>0</priority>
   </url>
   
