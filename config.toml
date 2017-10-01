@@ -48,7 +48,5 @@ googleAnalytics = ""
 
 # Add additional social link entries underneath
 [social]
-    # twitter  = "https://www.twitter.com/"
-    # facebook = "https://www.facebook.com/"
-    # github   = "https://www.github.com/"
-    # dribble  = "https://www.dribbble.com/"
+    linkedin = "https://www.linkedin.com/in/akhilsankar"
+    github   = "https://www.github.com/akhilsankar1993"
