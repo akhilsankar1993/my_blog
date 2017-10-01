@@ -30,13 +30,13 @@ To make it a little easier to follow, I'll split the hardware into two diagrams,
 
 This is the circuit to set up the water pump. I forgot to update the resistor in this schematic but I actually used a 150 ohm resistor between the dev board and the base of the transistor:
 
-![Water Pump Circuit](../../images/power_circuit.png)
+![Water Pump Circuit](/images/power_circuit.png)
 
 This is the circuit to set up the soil moisture. Once again, I actually used a 10K ohm resistor here:
 
-![Soil Moisture Circuit](../../images/moisture_circuit.png)
+![Soil Moisture Circuit](/images/moisture_circuit.png)
 
-You'll need to strip the insulation off the ends of the yellow wiring to get readings in the soil. I'd also recommending soldering galvanized nails to the ends of these wires if you have a soldering iron handy. That'll get you optimal readings. 
+You'll need to strip the insulation off the ends of the yellow wiring to get readings in the soil. I'd also recommending soldering galvanized nails to the ends of these wires if you have a soldering iron handy. That'll get you optimal readings.
 
 #### Setting Up the NodeMCU
 
