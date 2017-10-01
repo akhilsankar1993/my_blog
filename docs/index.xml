@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo Cactus Theme</title>
+    <link>https://example.org/</link>
+    <description>Recent content on Hugo Cactus Theme</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Oct 2017 13:24:07 -0400</lastBuildDate>
+    
+	<atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>hello.</title>
+      <link>https://example.org/posts/first_post/</link>
+      <pubDate>Sun, 01 Oct 2017 13:24:07 -0400</pubDate>
+      
+      <guid>https://example.org/posts/first_post/</guid>
+      <description>Hey everyone! This is my first post so obviously it has to be a hello, world! post.
+I&amp;rsquo;m creating this blog as a place to document projects and generally just stuff I&amp;rsquo;ve learned.</description>
+    </item>
+    
+  </channel>
+</rss>
