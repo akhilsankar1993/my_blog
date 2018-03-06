@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Akhil Sankar">
+<meta name="description" content="A place for me to document projects and other stuff.">
+<meta name="generator" content="Hugo 0.27" />
+<title>Modules in Modules in Rails</title>
+<link rel="shortcut icon" href="https://akhilsankar1993.github.io/my_blog/images/favicon.ico">
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/style.css">
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/highlight.css">
+
+
+
+<link rel="stylesheet" href="https://akhilsankar1993.github.io/my_blog/css/monosocialiconsfont.css">
+
+
+
+
+<meta property="og:title" content="Modules in Modules in Rails" />
+<meta property="og:description" content="Metaprogramming: Including Modules to Classes using Modules tl;dr: we can use klass.class_eval { includes SomeNewModule } or klass.send(:include, SomeNewModule) from a current module to dynamically include a newly desired module into a bunch of classes that use the current module.
+The Problem Suppose we have a few different vehicle classes like Plane and Rocket. Plane and Rocket (and any other flying vehicles) need to know how to take_off and land so they include the CanFly module." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://akhilsankar1993.github.io/my_blog/posts/modules_in_modules/" />
+
+
+
+<meta property="article:published_time" content="2018-03-06T13:33:32-05:00"/>
+<meta property="article:modified_time" content="2018-03-06T13:33:32-05:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta itemprop="name" content="Modules in Modules in Rails">
+<meta itemprop="description" content="Metaprogramming: Including Modules to Classes using Modules tl;dr: we can use klass.class_eval { includes SomeNewModule } or klass.send(:include, SomeNewModule) from a current module to dynamically include a newly desired module into a bunch of classes that use the current module.
+The Problem Suppose we have a few different vehicle classes like Plane and Rocket. Plane and Rocket (and any other flying vehicles) need to know how to take_off and land so they include the CanFly module.">
+
+
+<meta itemprop="dateModified" content="2018-03-06T13:33:32-05:00" />
+<meta itemprop="wordCount" content="480">
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Modules in Modules in Rails"/>
+<meta name="twitter:description" content="Metaprogramming: Including Modules to Classes using Modules tl;dr: we can use klass.class_eval { includes SomeNewModule } or klass.send(:include, SomeNewModule) from a current module to dynamically include a newly desired module into a bunch of classes that use the current module.
+The Problem Suppose we have a few different vehicle classes like Plane and Rocket. Plane and Rocket (and any other flying vehicles) need to know how to take_off and land so they include the CanFly module."/>
+
+
+    </head>
+<body>
+    <nav class="main-nav">
+	
+		<a href='https://akhilsankar1993.github.io/my_blog/'> <span class="arrow">←</span>Home</a>
+	
+
+	
+
+	
+</nav>
+
+    <section id="wrapper">
+        
+        
+<article class="post">
+    <header>
+        <h1>Modules in Modules in Rails</h1>
+        <h2 class="subtitle"></h2>
+        <h2 class="headline">
+        March 6, 2018
+        <br>
+        
+        </h2>
+    </header>
+    <section id="post-body">
+        
+
+<h4 id="metaprogramming-including-modules-to-classes-using-modules">Metaprogramming: Including Modules to Classes using Modules</h4>
+
+<p>tl;dr: we can use <code>klass.class_eval { includes SomeNewModule }</code> or <code>klass.send(:include, SomeNewModule)</code> from a current module to dynamically include a newly desired module into a bunch of classes that use the current module.</p>
+
+<h4 id="the-problem">The Problem</h4>
+
+<p>Suppose we have a few different vehicle classes like <code>Plane</code> and <code>Rocket</code>. <code>Plane</code> and <code>Rocket</code> (and any other flying vehicles) need to know how to <code>take_off</code> and <code>land</code> so they include the <code>CanFly</code> module.</p>
+
+<pre><code class="language-ruby">class Plane
+  include CanFly
+  attr_accessor :speed
+
+  def fly_somewhere
+    take_off
+    change_speed(100)
+    land
+  end
+end
+
+class Rocket
+  include CanFly
+  attr_accessor :speed
+
+  def go_to_space
+    take_off
+    change_speed(1000)
+    land
+  end
+end
+
+module CanFly
+  def take_off
+    #take off logic
+  end
+
+  def land
+    #landing logic
+  end
+
+  def change_speed(new_speed)
+    self.speed = new_speed
+  end
+end
+</code></pre>
+
+<p>Great! Each of our flying classes have access to the methods they need to fly. But suppose we then create a new class called <code>Car</code>. <code>Car</code> doesn&rsquo;t need to take off or land. But it does need to change speed. So what do we do? Well, one option is to create a new concern, that we can use across each of our models.</p>
+
+<p>So we just include this new module in my <code>Car</code> class and we&rsquo;re good to go. Right?</p>
+
+<pre><code class="language-ruby">module CanFly
+  #...other methods
+
+  def change_speed(new_speed)
+    self.speed = new_speed
+  end
+end
+
+# new module with common code
+module CanAccelerate
+  def change_speed(new_speed)
+    self.speed = new_speed
+  end
+end
+
+# new vehicle class
+class Car
+  include CanAccelerate
+  attr_accessor :speed
+
+  def drive_somewhere
+    change_speed(50)
+  end
+end
+</code></pre>
+
+<p>Except, now we&rsquo;ve repeated the same <code>change_speed</code> method in two different places. So that&rsquo;s not great&hellip;</p>
+
+<p>We could delete this method from the <code>CanFly</code> module, but then we&rsquo;d have to include the <code>CanAccelerate</code> module to each one of our vehicles that use <code>change_speed</code> from the <code>CanFly</code> module.</p>
+
+<p>More importantly, any time we create a new class that needs <code>CanFly</code>, we&rsquo;d need to remember to also include the <code>CanAccelerate</code> module as well. That&rsquo;s awful!</p>
+
+<h4 id="the-solution">The Solution</h4>
+
+<p>We could use a little metaprogramming technique here to update all the classes that use <code>CanFly</code> to also include <code>CanAccelerate</code> dynamically. In other words, this is useful when we want to make a change to a class(es) without explicitly knowing what it is until runtime. To do that, we can use <code>klass.class_eval</code> or <code>klass.send</code>.</p>
+
+<p><code>klass.class_eval</code> takes a block in which the context of the block is the klass itself, not the module. So, to include the <code>CanAccelerate</code> module for all classes that already include <code>CanFly</code>, we can do something like this:</p>
+
+<pre><code class="language-ruby">module CanFly
+  def self.included(klass)
+    klass.class_eval do
+      includes CanAccelerate # =&gt; so this includes CanAccelerate for that klass
+    end
+  end
+end
+</code></pre>
+
+<p>Alternatively, this would also work:</p>
+
+<pre><code class="language-ruby">module CanFly
+  def self.included(klass)
+    klass.send(:include, CanAccelerate) # =&gt; no context change here
+  end
+end
+</code></pre>
+
+<p>I prefer the first method stylistically in the event of adding multiple other concerns/modules. It&rsquo;s a little less verbose. But the two seem interchangeable to me in this scenario.</p>
+
+<p>Thanks for reading!</p>
+
+    </section>
+</article>
+
+
+
+<ul id="post-list" class="archive readmore">
+    
+
+    
+    
+    
+        <li>
+            <a href="https://akhilsankar1993.github.io/my_blog/posts/setting_up_the_nodemcu/">Setting Up the NodeMCU<aside class="dates">Oct 1 2017</aside></a>
+        </li>
+    
+        <li>
+            <a href="https://akhilsankar1993.github.io/my_blog/posts/first_post/">hello.<aside class="dates">Oct 1 2017</aside></a>
+        </li>
+    
+</ul>
+
+
+
+        <footer id="footer">
+    
+        <div id="social">
+
+	
+	
+    
+    <a class="symbol" href="https://www.github.com/akhilsankar1993">
+        circlegithub
+    </a>
+    
+    <a class="symbol" href="https://www.linkedin.com/in/akhilsankar">
+        circlelinkedin
+    </a>
+    
+
+
+</div>
+
+    
+    <p class="small">
+    
+        © Copyright 2018 Akhil Sankar
+    
+    </p>
+</footer>
+
+    </section>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://akhilsankar1993.github.io/my_blog/js/main.js"></script>
+<script src="https://akhilsankar1993.github.io/my_blog/js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body>
+</html>

@@ -6,10 +6,20 @@
     <description>Recent content on Hugo Cactus Theme</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Oct 2017 14:11:52 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 06 Mar 2018 13:33:32 -0500</lastBuildDate>
     
 	<atom:link href="https://akhilsankar1993.github.io/my_blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Modules in Modules in Rails</title>
+      <link>https://akhilsankar1993.github.io/my_blog/posts/modules_in_modules/</link>
+      <pubDate>Tue, 06 Mar 2018 13:33:32 -0500</pubDate>
+      
+      <guid>https://akhilsankar1993.github.io/my_blog/posts/modules_in_modules/</guid>
+      <description>Metaprogramming: Including Modules to Classes using Modules tl;dr: we can use klass.class_eval { includes SomeNewModule } or klass.send(:include, SomeNewModule) from a current module to dynamically include a newly desired module into a bunch of classes that use the current module.
+The Problem Suppose we have a few different vehicle classes like Plane and Rocket. Plane and Rocket (and any other flying vehicles) need to know how to take_off and land so they include the CanFly module.</description>
+    </item>
     
     <item>
       <title>Setting Up the NodeMCU</title>
